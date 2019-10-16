@@ -24,12 +24,16 @@ Route::post('signUp', ['uses' => 'UserController@postUser']);
 Route::post('login', ['uses' => 'UserController@login']);
 Route::put('user/{userId}', ['uses' => 'UserController@putUser']);
 Route::delete('user/{userId}', ['uses' => 'UserController@deleteUser']);
+Route::put('update/profile/{userId}', ['uses' => 'UserController@updateUser']);
+Route::put('resetPassword', ['uses' => 'Auth\ResetPasswordController@resetPasswordUsingCode']);
+Route::post('forgotPassword', ['uses' => 'Auth\ForgotPasswordController@appSendResetLinkEmail']);
 
 
 //category end-points
 Route::get('categories', ['uses' => 'CategoryController@getCategories']);
-Route::get('category', ['uses' => 'CategoryController@getCategory']);
 Route::post('category', ['uses' => 'CategoryController@postCategory']);
+Route::get('category/{categoryId}', ['uses' => 'CategoryController@getCategory']);
+Route::get('category/pieces/{categoryId}/{userId}', ['uses' => 'CategoryController@getCategoryPieces']);
 Route::put('category/{categoryId}', ['uses' => 'CategoryController@putCategory']);
 Route::delete('category/{categoryId}', ['uses' => 'CategoryController@deleteCategory']);
 
@@ -58,4 +62,17 @@ Route::get('pieces/purchased/{userId}', ['uses' => 'PieceController@getPurchased
 Route::post('like', ['uses'=>'LikeController@postLike']);
 Route::get('like/{image_id}',['uses'=>'LikeController@getUsersWhoLikedPiece']);
 Route::get('like/{image_id}/{user_id}',['uses'=>'LikeController@isLikedByMe']);
+
+// PesaPal Transaction end-points
+Route::get('pesapalIframe/{user_id}',['uses'=>'PesaPalController@getPesaPalIframe']);
+
+Route::get('pesapalRedirect/{user_id}',['uses'=>'PesaPalController@getPesaPalIframeUrl']);
+Route::get('pesapalUrl/{user_id}',['uses'=>'PesaPalController@getPesaPalIframeUrl']);
+Route::get('userTransactions/{user_id}',['uses'=>'PesaPalController@getUserTransactions']);
+Route::get('transactions/{user_id}',['uses'=>'PesaPalController@getUserTransactions']);
+
+Route::get('purchases/{user_id}',['uses'=>'PesaPalController@getUserPurchases']);
+
+Route::get('pesapalCallback',['uses'=>'PesaPalController@callbackHandler']);
+
 

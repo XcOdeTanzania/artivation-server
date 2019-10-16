@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Artist;
 use App\User;
+use App\Piece;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use http\Env\Response;
 
 class ArtistController extends Controller
 {
@@ -22,7 +22,7 @@ class ArtistController extends Controller
      }
     return response()->json([
         'artists' => $artists
-    ]);
+    ],200,[], JSON_NUMERIC_CHECK);
    }
 
 
@@ -36,11 +36,14 @@ class ArtistController extends Controller
             'status' => false
         ]);
     }
+    
+     $pieces = Piece::where('artist_id',$artistId)->get();
 
     return response()->json([
         'artist' => $artist,
+        'pieces' => $pieces,
         'status' => true
-    ]);
+    ], 200,[], JSON_NUMERIC_CHECK);
     }
 
      //create an artist
@@ -80,7 +83,7 @@ class ArtistController extends Controller
     return response()->json([
         'artist' => $artist,
         'status' => true
-    ]);
+    ],200,[], JSON_NUMERIC_CHECK);
 
 
 }
@@ -90,13 +93,29 @@ class ArtistController extends Controller
 function putArtist(Request $request, $artistId){
     $artist = Artist::find($artistId);
 
-    if ($artist) {
+    if (!$artist) {
         return response()->json([
             'message' => 'artist not found',
             'status' => false
         ]);
     }
 
+ $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'number_of_pieces' =>'required',
+            'number_of_pieces_bought' =>'required',
+            'number_of_likes' => 'required',
+            'ratings' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            //pass validator errors as errors object for ajax response
+
+            return response()->json([
+                'errors' => $validator->errors(),
+                'status' => false]);
+        }
     $artist->update([
         'user_id' => $request->input('user_id'),
         'number_of_pieces' => $request->input('number_of_pieces'),
@@ -108,7 +127,7 @@ function putArtist(Request $request, $artistId){
     return response()->json([
         'artist' => $artist,
         'status' => true
-    ]);
+    ], 200,[], JSON_NUMERIC_CHECK);
 }
 
 

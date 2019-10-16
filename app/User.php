@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Notifications\ResetPassword;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -57,5 +58,15 @@ class User extends Authenticatable implements JWTSubject
     public function likes()
     {
         return $this->belongsToMany(Image::class, 'likes', 'user_id', 'piece_id');
+    }
+    
+    public function transactions(){
+        return  $this->hasMany(Transaction::class);
+    }
+
+    // Custom Reset Password
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

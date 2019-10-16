@@ -47,7 +47,8 @@ class UserController extends Controller
 
     function postUser(Request $request)
     {
-        $site_url = "http://192.168.1.107:8000/api/piece/image/";
+        // $site_url = "http://192.168.1.107:8000/api/piece/image/";
+        $site_url = "http://www.artivation.co.tz/backend/api/piece/image/";
         $validator = Validator::make($request->all(), [
             'username' => 'required',
             'email' => 'required|email|unique:users',
@@ -168,6 +169,43 @@ class UserController extends Controller
             'status' => true
         ]);
     }
+    
+     function updateUser(Request $request, $userId)
+    {
+        $user = User::find($userId);
+        if (!$user) {
+            return response()->json([
+                'message' => 'User Not found',
+                'status' => false
+            ]);
+        }
+        
+        if($request->input('phone'))
+        $phoneValidator = $this->isPhoneValid($request->input('phone'));
+        
+        if($request->input('phone') && $phoneValidator['status']!= true){  
+            return response()->json([
+                'message' => 'Phone Not  Valid',
+                'status' => false
+            ]);
+        }
+       
+        
+        $site_url = "http://www.artivation.co.tz/backend/api/piece/image/";
+        $user->update([
+            'username' => $request->input('username') ? $request->input('username') : $user->username ,
+            'photo_url' => $site_url.$request->input('photo_url'),
+            'email' => !$request->input('email') ? $user->email : $request->input('email'),
+            'sex' => !$request->input('sex') ? $user->sex : $request->input('sex'),
+            'phone' => !$request->input('phone') ? $user->phone : $request->input('phone'),
+        ]);
+
+        return response()->json([
+            'user' => $user,
+            'message' => 'Updated successfuly',
+            'status' => true
+        ]);
+    }
 
     function deleteUser($userId)
     {
@@ -177,5 +215,45 @@ class UserController extends Controller
         }
         $user->delete();
         return response()->json(['message' => 'The user has been deleted'], 200);
+    }
+    
+    function isPhoneValid($phone){
+        
+        if(preg_match('/^\+[0-9]{12}$/',$phone)){
+           // return true;
+         return array(
+                'message' => 'Valid phone number',
+                'status' => true)
+           ; 
+          
+        }
+        
+         if(preg_match('/^0[0-9]{9}$/',$phone)){
+            
+            return array(
+                'message' => 'Valid phone number',
+                'status' => true
+            ); 
+        }
+        
+        if(preg_match('/\+?([0-9]{2})-?([0-9]{3})-?([0-9]{6,7})/',$phone)){
+          return array(
+                'message' => 'Unsupported phone number',
+                'status' => false
+            ); 
+        }
+        
+        else  return array(
+                'message' => 'Invalid phone number',
+                'status' => false
+            ); 
+        
+        // if(preg_match("/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/", $phone)) {
+        //     return false;
+        //     // return response()->json([
+        //     //     'message' => 'Wrong phone number',
+        //     //     'status' => false
+        //     // ]); 
+        //   }
     }
 }

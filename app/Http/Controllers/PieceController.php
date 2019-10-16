@@ -54,7 +54,7 @@ class PieceController extends Controller
         })->values();
         
         return response()->json(['pieces' => $filtered_collection,
-                                  'count'=> count($filtered_collection)],200);
+                                  'count'=> count($filtered_collection)],200,[], JSON_NUMERIC_CHECK);
         // return response()->json([
         //     'pieces' => Piece::all()
         // ]);
@@ -77,13 +77,14 @@ class PieceController extends Controller
         return response()->json([
             'piece' => $piece,
             'status' => true
-        ]);
+        ],200,[], JSON_NUMERIC_CHECK);
         }
     
          //create an piece
         function postPiece(Request $request){
 
-        $site_url = "http://192.168.1.107:8000/api/piece/image/";
+        //$site_url = "http://192.168.1.107:8000/api/piece/image/";
+        $site_url = "http://www.artivation.co.tz/backend/api/piece/image/";
     
         $validator = Validator::make($request->all(), [
             'title' => 'required',
@@ -128,7 +129,7 @@ class PieceController extends Controller
         
             $artist->pieces()->save($piece);
 
-             return response()->json(['piece' => $piece], 201);
+             return response()->json(['piece' => $piece], 201,[], JSON_NUMERIC_CHECK);
         }
 
         return response()->json(['Error'=>'File not found'],404);
@@ -156,11 +157,29 @@ class PieceController extends Controller
                 'status' => false
             ]);
         }
+        
+        $validator = Validator::make($request->all(), [
+            'price' => 'required',
+            'title' => 'required',
+            'size' => 'required',
+            'desc' => 'required'
+           
+        ]);
 
+        if ($validator->fails()) {
+
+            //pass validator errors as errors object for ajax response
+
+            return response()->json([
+                'errors' => $validator->errors(),
+                'status' => false]);
+        }
 
         $piece->update([
-            'cart_status' => $request->input('cart_status'),
-            'favorite_list' => $request->input('favorite_list'),
+            'price' => $request->input('price'),
+            'title' => $request->input('title'),
+            'size' => $request->input('size'),
+            'desc' => $request->input('desc'),
         ]);
     
         return response()->json([
@@ -204,9 +223,22 @@ class PieceController extends Controller
                  return $item;
         })->values();
 
+    foreach ($purchased_pieces as $piece) {
+        $likes = Like::where('piece_id',$piece->id)->get();
+            if($likes->contains('user_id',$userId)){
+                $piece->like_status = true;
+            }
+            else{
+                $piece->like_status = false;
+            }
+            $piece->like_counts = count($likes);
+        
+    }
+
         return response()->json([
             'pieces' =>  $purchased_pieces
-        ]);
+        ],200,
+        [], JSON_NUMERIC_CHECK);
     }
 
     function addPieceToCart(Request $request){
@@ -247,7 +279,8 @@ class PieceController extends Controller
         }
         return response()->json([
             'piece' => $piece,
-            'status' => $status
-        ]);
+            'status' => $status,
+            
+        ], 200,[], JSON_NUMERIC_CHECK);
     }
 }

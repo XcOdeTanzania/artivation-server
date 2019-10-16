@@ -54,7 +54,7 @@ class LikeController extends Controller
                                   'count'=>count($filtered_collection),
                                   'likes'=>$filtered_collection,
                                   'users'=>  $users,
-                                  'rate'=>   $rate],201);
+                                  'rate'=>   $rate],200,[], JSON_NUMERIC_CHECK);
     }
 
    public function getUsersWhoLikedPiece($piece_id){
@@ -65,7 +65,7 @@ class LikeController extends Controller
          $likes = Like::wherePieceId($piece->id);
          
          return response()->json([
-                'likes'=>$likes],200);
+                'likes'=>$likes],200,[], JSON_NUMERIC_CHECK);
    }
 
 
@@ -92,16 +92,16 @@ class LikeController extends Controller
             
             
             return response()->json(['message'=>'piece has been liked for the first time by this user',
-                                     'status'=>$like],200);
+                                     'status'=>$like],200,[], JSON_NUMERIC_CHECK);
 
        
         } else {
             if (is_null($existing_like->deleted_at)) {
                 $existing_like->delete();
-                return response()->json(['status'=>'disliked'],201);
+                return response()->json(['status'=>'disliked'],201,[], JSON_NUMERIC_CHECK);
             } else {
                 $existing_like->restore();
-                return response()->json(['status'=>'liked'],200);
+                return response()->json(['status'=>'liked'],200,[], JSON_NUMERIC_CHECK);
             }
         }
     }
