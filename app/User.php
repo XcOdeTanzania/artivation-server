@@ -69,4 +69,24 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->notify(new ResetPassword($token));
     }
+
+    //Relation to coupon
+    public function coupon(){
+        return $this->hasOne(Coupon::class,'acquired_by');
+    }
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+
+    public function cartPieces()
+    {
+        return $this->belongsToMany(Piece::class,'carts');
+    }
+
+    public function role(){
+        return $this->belongsTo(Role::class)->first();
+    }
 }

@@ -11,3 +11,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }
+const tax_value = 0.06;
+const shipping_cost_per_item = 7;
+const site_url = 'http://localhost:8001';

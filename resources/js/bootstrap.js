@@ -1,4 +1,6 @@
 
+import Popper from 'popper.js/dist/umd/popper.js';
+
 window._ = require('lodash');
 
 /**
@@ -8,11 +10,18 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-
+    window.Popper = Popper;
     require('bootstrap');
-} catch (e) {}
+} catch (e) {
+}
+
+// try {
+//     window.$ = window.jQuery = require('jquery');
+//     window.Popper = require('popper.js').default;
+//
+//     require('bootstrap');
+// } catch (e) {}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

@@ -21,4 +21,12 @@ class Piece extends Model
         'favorite_list',
         'purchased_by'
     ];
+
+    public function cart(){
+        return $this->hasOne(Cart::class);
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

@@ -23,8 +23,8 @@ class CreatePiecesTable extends Migration
              $table->double('rate')->nullable();
              $table->integer('artist_id');
              $table->integer('category_id');
-             $table->integer('purchased_by');
-             $table->boolean('cart_status');
+             $table->integer('purchased_by')->nullable();
+             $table->boolean('cart_status')->nullable();
              $table->text('favorite_list')->nullable();
              $table->softDeletes();
             $table->timestamps();

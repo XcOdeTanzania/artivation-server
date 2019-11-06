@@ -27,6 +27,7 @@ Route::delete('user/{userId}', ['uses' => 'UserController@deleteUser']);
 Route::put('update/profile/{userId}', ['uses' => 'UserController@updateUser']);
 Route::put('resetPassword', ['uses' => 'Auth\ResetPasswordController@resetPasswordUsingCode']);
 Route::post('forgotPassword', ['uses' => 'Auth\ForgotPasswordController@appSendResetLinkEmail']);
+Route::get('user/checkout/{userId}',['uses'=>'UserController@checkOutUser']);
 
 
 //category end-points
@@ -53,8 +54,10 @@ Route::get('pieces/{user_id}', ['uses' => 'PieceController@getPieces']);
 Route::get('piece/{pieceId}', ['uses' => 'PieceController@getPiece']);
 Route::put('piece/{pieceId}', ['uses' => 'PieceController@putPiece']);
 Route::delete('piece/{pieceId}', ['uses' => 'PieceController@deletePiece']);
-Route::get('piece/image/{pieceId}',['uses'=>'PieceController@viewPiece']);
+Route::get('piece/image/{folder}/{image}',['uses'=>'PieceController@viewImage']);
+Route::get('piece/image/{image}',['uses'=>'PieceController@viewPiece']);
 Route::get('pieces/purchased/{userId}', ['uses' => 'PieceController@getPurchasedPieces']);
+
 
 
 
@@ -74,5 +77,11 @@ Route::get('transactions/{user_id}',['uses'=>'PesaPalController@getUserTransacti
 Route::get('purchases/{user_id}',['uses'=>'PesaPalController@getUserPurchases']);
 
 Route::get('pesapalCallback',['uses'=>'PesaPalController@callbackHandler']);
+
+//Coupon End point
+Route::post('coupon/register',['uses'=>'CouponController@registerCoupon']);
+Route::post('coupon/generate',['uses'=>'CouponController@generateCoupon']);
+Route::post('coupon/acquire',['uses'=>'CouponController@acquireCoupon']);
+
 
 
