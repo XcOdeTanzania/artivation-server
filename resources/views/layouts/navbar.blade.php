@@ -18,20 +18,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/artists">Artist <span class="sr-only">(current)</span></a>
+            <li class="nav-item {{ request()->is('artists') ? 'active' : '' }} ">
+                <a class="nav-link" href="/artists">Artist <span class="sr-only">(current)</span> </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/gallery/0/0">Gallery</a>
+                <a class="nav-link {{ request()->is('gallery*') ? 'active' : '' }}" href="/gallery/0/0">Gallery</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('about.us')}}">About</a>
+                <a class="nav-link {{ request()->is('about*') ? 'active' : '' }} " href="{{route('about.us')}}">About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Blog</a>
+                <a class="nav-link" href="{{route('blog')}}">Blog</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('downloads')}}"> Downloads </a>
+                <a class="nav-link {{ request()->is('downloads*') ? 'active' : '' }} " href="{{route('downloads')}}"> Downloads </a>
             </li>
         </ul>
 

@@ -26,28 +26,37 @@
         @if($accessibility)
             <div class="card-body d-flex">
 
+                {{--<span class="d-inline-block" data-placement="top" data-toggle="popover" data-content="This is the popover" data-trigger="focus">--}}
 
-
-                <a id="likeItem" onclick="likeItem(this,{{$piece['id']}},{{Auth::user()['id']}});" class="btn @if(!Auth::check())  disabled @endif p-0"  >
+                <span class="d-inline-block" @if(!Auth::check()) data-toggle="tooltip" data-placement="top" title="Login first" @endif>
+                <a id="likeItem" onclick="likeItem(this,{{$piece['id']}},{{Auth::user()['id']}});"
+                   class="btn @if(!Auth::check())  disabled @endif p-0"
+                   @if(!Auth::check())data-placement="top" data-toggle="popover" data-content="You are not Log in"
+                   data-trigger="hover" @endif>
                     <i id="heartIcon{{$piece['id']}}" class="fa @if($piece['like_status']) echo fa-heart
                                           @else echo fa-heart-o @endif
                             m-1" style="color: red"></i>
                     <small class="p-1">{{$piece['like_counts']}} likes</small>
                 </a>
 
+                </span>
 
-                <a onclick="addToCart(this,{{$piece['id']}});" class="btn btn-outline-success @if(!Auth::check()) echo disabled @endif  ml-auto">
+                <span class="d-inline-block ml-auto" @if(!Auth::check()) data-toggle="tooltip" data-placement="top" title="Login first" @endif>
+                <a onclick="addToCart(this,{{$piece['id']}});"
+                   class="btn btn-outline-success @if(!Auth::check())  disabled @endif  ml-auto">
                     <i class="fa fa-shopping-cart m-1" style="color: green"></i>
                     @if(!$piece['cart_status']) Add To Cart @else Remove From Cart @endif </a>
+                </span>
             </div>
         @endif
+
+
     </div>
 
     <Script type="application/javascript" event="onclick">
 
 
-
-        function likeItem(_this,pieceId, userId) {
+        function likeItem(_this, pieceId, userId) {
 
             var data = {"piece_id": pieceId, "user_id": userId, "_token": "{{ csrf_token() }}"};
 
@@ -59,9 +68,9 @@
                 contentType: 'application/json; charset=utf-8',
                 processData: false,
                 success: function (response) {
-                  //  alert(response['msg']);
+                    //  alert(response['msg']);
                     console.log(response);
-                    if(response['status']){
+                    if (response['status']) {
 
                         updateText(_this, response['count'], "fa fa-heart");
                     }
@@ -69,7 +78,7 @@
                         updateText(_this, response['count'], "fa fa-heart-o");
                     }
                 },
-                error:function () {
+                error: function () {
                     console.log('Error Occurred !');
                 }
 
@@ -78,11 +87,11 @@
 
         function updateText(btn, newCount, iconClass, verb) {
             verb = verb || "";
-            $(btn).html( '<i style="color: red" class="' + iconClass + '"></i><small class="p-1"> ' + newCount +' likes </small> ' + verb )
+            $(btn).html('<i style="color: red" class="' + iconClass + '"></i><small class="p-1"> ' + newCount + ' likes </small> ' + verb)
             btn.attr("data-likes", newCount)
         }
 
-        function addToCart(btn,pieceId) {
+        function addToCart(btn, pieceId) {
             var data = {"piece_id": pieceId, "user_id": {{Auth::user()['id']}}, "_token": "{{ csrf_token() }}"};
 
             $.ajax({
@@ -95,27 +104,27 @@
                 success: function (response) {
 //                      alert(response['msg']);
 //                    console.log(response['status']);
-                    if(response['status']){
-                        $(btn).html( '<i class="fa fa-shopping-cart m-1" style="color: green"></i> Remove From Cart' )
+                    if (response['status']) {
+                        $(btn).html('<i class="fa fa-shopping-cart m-1" style="color: green"></i> Remove From Cart')
                         btn.attr("cart", '')
                     }
                     else {
-                        $(btn).html( '<i class="fa fa-shopping-cart m-1" style="color: green"></i> Add To Cart' )
+                        $(btn).html('<i class="fa fa-shopping-cart m-1" style="color: green"></i> Add To Cart')
                         btn.attr("cart", '')
                     }
                 },
-                error:function () {
+                error: function () {
                     console.log('Error Occurred !');
                 }
             });
         }
 
 
-//        function updateText(btn, newCount, iconClass, verb) {
-//            verb = verb || "";
-//            $(btn).html(newCount + '<i style="color: red" class="' + iconClass + '"></i><small class="p-1"> newCount </small> ' + verb)
-//            btn.attr("data-likes", newCount)
-//        }
+        //        function updateText(btn, newCount, iconClass, verb) {
+        //            verb = verb || "";
+        //            $(btn).html(newCount + '<i style="color: red" class="' + iconClass + '"></i><small class="p-1"> newCount </small> ' + verb)
+        //            btn.attr("data-likes", newCount)
+        //        }
 
     </Script>
 @endsection

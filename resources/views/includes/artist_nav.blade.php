@@ -18,10 +18,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item {{ request()->is('piece/create') ? 'active' : '' }} ">
                 <a class="nav-link" href="{{route('piece.create')}}">New Artwork <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ request()->is('artist/pieces') ? 'active' : '' }} ">
                 <a class="nav-link" href="{{route('artist.pieces')}}">My Artworks</a>
             </li>
 

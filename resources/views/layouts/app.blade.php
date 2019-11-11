@@ -10,8 +10,8 @@
     <title>Artivation</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
+    {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
+    <script src="/js/app.js"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -83,9 +83,17 @@
 <body>
 <div id="app">
     @include('layouts.navbar')
+
     @if (session('error'))
-        <div class="alert alert-success ">
+        <div class="alert alert-danger alert-dismissible">
+            <button class="close" type="button" data-dismiss="alert"><span>&times;</span></button>
             {{ session('error') }}
+        </div>
+    @endif
+    @if (session('msg'))
+        <div class="alert alert-success alert-dismissible">
+            <button class="close" type="button" data-dismiss="alert"><span>&times;</span></button>
+            {{ session('msg') }}
         </div>
     @endif
 
@@ -95,6 +103,10 @@
     </main>
 </div>
 @yield('footer')
+<script>
 
+    $('[data-toggle="popover"]').popover();
+    $('[data-toggle="tooltip"]').tooltip();
+</script>
 </body>
 </html>

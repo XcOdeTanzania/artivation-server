@@ -13,23 +13,28 @@
 @endsection
 
 @section('content')
-    <div class="container min-vh-100" >
-        <div class="d-flex justify-content-center " >
+    <div class="container min-vh-100">
+        <div class="d-flex justify-content-center ">
             <div class="d-flex col-xl-8 col-lg-9 col-md-10 col-sm-12">
-                <table class="table table-bordered  text-center  ">
+                <table class="table table-bordered table-striped  text-center  ">
                     <thead>
                     <td>SN</td>
+                    <td>Token</td>
                     <td>Created Date</td>
                     <td class="text-center">Discount (%)</td>
-                    <td>Used By</td>
+                    <td>Acquired By</td>
+                    <td>Used At</td>
                     <td>Expire On</td>
                     </thead>
-                    <tbody >
+                    <tbody>
 
                     @foreach($coupons as $coupon)
                         <tr>
                             <td>
                                 {{$loop->iteration}}
+                            </td>
+                            <td>
+                                {{$coupon['token']}}
                             </td>
                             <td>
                                 {{$coupon['created_at']}}
@@ -40,6 +45,11 @@
                             <td>
                                 @if($coupon->user()->first()) {{$coupon->user()->first()['username']}}
                                 @else  -
+                                @endif
+                            </td>
+                            <td>
+                                @if($coupon['used_at']){{$coupon['used_at']}}
+                                @else -
                                 @endif
                             </td>
                             <td>
@@ -56,8 +66,8 @@
     </div>
     <script>
         $('body>.container').height(
-            $(window).height()-
-            $('body>.container-fluid').height()-
+            $(window).height() -
+            $('body>.container-fluid').height() -
             $('body>footer').height()
         );
     </script>

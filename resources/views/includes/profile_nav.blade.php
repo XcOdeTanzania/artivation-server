@@ -18,16 +18,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{route('user.profile')}}">Info <span class="sr-only">(current)</span></a>
+            <li class="nav-item {{ request()->is('user/profile*') ? 'active' : '' }}">
+                <a class="nav-link " href="{{route('user.profile')}}">Info <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('user.update')}}">Update Profile</a>
+            <li class="nav-item {{ request()->is('user/update*') ? 'active' : '' }}">
+                <a class="nav-link  " href="{{route('user.update')}}">Update Profile</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('user.credentials')}}">Credentials</a>
+            <li class="nav-item  {{ request()->is('user/credentials*') ? 'active' : '' }} ">
+                <a class="nav-link " href="{{route('user.credentials')}}">Credentials</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" href="{{route('home')}}"> Home </a>
             </li>
         </ul>
@@ -59,7 +59,7 @@
                         @endif
 
                         @if(Auth::user() && Auth::user()->role() && Auth::user()->role()['name'] == 'Artist')
-                            <a class="dropdown-item" href="/artist/dashboard">Artist Dashboard</a>
+                            <a class="dropdown-item" href="{{route('piece.create')}}">Artist Dashboard</a>
                         @endif
 
                     </div>

@@ -214,10 +214,13 @@ class UserController extends Controller
                         'number_of_pieces' => 0,
                         'number_of_pieces_bought' => 0,
                         'number_of_likes' => 0,
-                        'ratings' => 1,
-                        'folder' => $user->username
+                        'ratings' => 1
                     ]);
                     $artist->save();
+
+                    $artist->update([
+                        'folder'=>'Artist_'.str_pad($artist->id,3,'0',STR_PAD_LEFT)
+                    ]);
                 }
 
             } else {
@@ -321,7 +324,7 @@ class UserController extends Controller
         $coupon = $user->coupon()->first();
         $discountPercent = 0;
 
-        if ($coupon && $coupon->expire_on >= today())
+        if ($coupon && $coupon->expire_on >= today() && $coupon->used_at == null)
             $discountPercent = $coupon->discount_percent;
 
         //= $user->coupon()->first()->discount_percent;

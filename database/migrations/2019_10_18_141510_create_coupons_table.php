@@ -20,7 +20,7 @@ class CreateCouponsTable extends Migration
             $table->integer('registered_by');
             $table->date('expire_on');
             $table->integer('acquired_by')->nullable();
-            $table->date('used_on')->nullable();
+            $table->timestamp('used_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

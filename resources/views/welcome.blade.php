@@ -4,6 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Artivation</title>
+    <style>
+        .cart-badge {
+            position: absolute;
+            right: -5px;
+            top: 10px;
+            background: red;
+            text-align: center;
+            border-radius: 25px 25px 25px 25px;
+            color: white;
+            padding: 2px 5px;
+            font-size: 10px;
+        }
+
+        .cart {
+            position: relative;
+            padding-top: 5px;
+            display: inline-block;
+        }
+    </style>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url('/css/app.css') }}"/>
 
@@ -16,31 +35,43 @@
     </div>
 @endif
 
-@include('layouts.coursel')
+{{--@include('layouts.coursel')--}}
+
+<div class="jumbotron jumbotron-fluid p-0 my-1 ">
+   <div class="card w-100">
+       <img src="{{ asset('img/studio.jpg') }}" class="card-img-top" alt="...">
+       <div class="card-img-overlay text-center text-white  d-flex flex-column justify-content-center "
+            style="background: rgba(0, 0, 0, 0.7) none repeat scroll 0 0; ">
+           <h3 class="display-4">Welcome to Artivation</h3>
+           <h5 > A place where <strong> artists </strong>  showcase their work for you to find and acquire</h>
+       </div>
+   </div>
+    </div>
 
 
-<div class=" mt-1 pt-3 " style="background-color: #c7dddb;">
 
-    <!--Grid row-->
-    <div class="row m-2 ">
+{{--<div class=" mt-1 pt-3 " style="background-color: #c7dddb;">--}}
 
+    {{--<!--Grid row-->--}}
+    {{--<div class="row m-2 ">--}}
+        {{----}}
 
-    @foreach($pieces->reverse() as $piece)
-        <!--Grid column-->
-            <div class="col-lg-2 col-md-12 mb-4">
+    {{--@foreach($pieces->reverse() as $piece)--}}
+        {{--<!--Grid column-->--}}
+            {{--<div class="col-lg-2 col-md-12 mb-4">--}}
 
-                <!--Image-->
-                <div class="view overlay z-depth-1-half ">
-                    <img src="{{$piece['image']}}" class="img-fluid"
-                         alt="">
-                    <a href="">
-                        <div class="mask rgba-white-light"></div>
-                    </a>
-                </div>
+                {{--<!--Image-->--}}
+                {{--<div class="view overlay z-depth-1-half ">--}}
+                    {{--<img src="{{$piece['image']}}" class="img-fluid"--}}
+                         {{--alt="">--}}
+                    {{--<a href="">--}}
+                        {{--<div class="mask rgba-white-light"></div>--}}
+                    {{--</a>--}}
+                {{--</div>--}}
 
-            </div>
-            <!--Grid column-->
-    @endforeach
+            {{--</div>--}}
+            {{--<!--Grid column-->--}}
+    {{--@endforeach--}}
 
 
         {{--<!--Grid column-->--}}
@@ -118,10 +149,10 @@
         {{--</div>--}}
         {{--<!--Grid column-->--}}
 
-    </div>
+    {{--</div>--}}
     <!--Grid row-->
 
-</div>
+{{--</div>--}}
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

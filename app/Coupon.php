@@ -14,6 +14,7 @@ class Coupon extends Model
         'registered_by',
         'expire_on',
         'acquired_by',
+        'used_at'
     ];
 
     protected $hidden = [

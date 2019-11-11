@@ -74,6 +74,20 @@
                 column-count: 4;
             }
         }
+
+        body {
+            min-height: 100vh;
+            position: relative;
+            margin: 0;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+        }
+
+
+
     </style>
 
     <!-- Styles -->
@@ -81,19 +95,29 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body >
-
-<div id="manage">
+@yield('nav-bar')
+<div id="manage" class="">
     @if (session('error'))
-        <div class="alert alert-success ">
+        <div class="alert alert-danger alert-dismissible">
+            <button class="close" type="button" data-dismiss="alert"><span>&times;</span></button>
             {{ session('error') }}
         </div>
     @endif
-    @yield('nav-bar')
+    @if (session('msg'))
+        <div class="alert alert-success alert-dismissible">
+            <button class="close" type="button" data-dismiss="alert"><span>&times;</span></button>
+            {{ session('msg') }}
+        </div>
+    @endif
+
     <main class="py-4">
         @yield('content')
     </main>
 </div>
-<footer class="page-footer font-small pt-4 " style="background-color: #8adad7">
+<div class="m-4" style="height:50px">
+
+</div>
+<footer class="page-footer font-small pt-0 w-100   " style="background-color: #8adad7">
     <div class="footer-copyright text-center  py-3" style="background-color: #45cac5">Artivation © 2019
 
         {{--<span>--}}
@@ -105,4 +129,5 @@
 </footer>
 
 </body>
+
 </html>

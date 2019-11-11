@@ -18,16 +18,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item {{request()->is('admin/dashboard') ? 'active':''}}">
                 <a class="nav-link" href="{{route('admin.dashboard')}}"> Assign Roles <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{request()->is('coupon/management')?'active':''}}">
                 <a class="nav-link" href="{{route('coupon.management')}}">Generate Coupons</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{request()->is('admin/user')?'active':''}}">
                 <a class="nav-link" href="{{route('admin.users')}}"> View Users </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{request()->is('coupon/view')?'active':''}}">
                 <a class="nav-link" href="{{route('admin.coupons')}}"> View Coupons </a>
             </li>
             <li class="nav-item">

@@ -201,7 +201,7 @@
             </div>
 
             <div class="row m-2 justify-content-center">
-                <a href="pesapalUrl/{{Auth::user()['id']}}" class="btn btn-success w-75">Check Out</a>
+                <a href="{{route('pp.redirect',Auth::user()['id'])}}" class="btn btn-success w-75">Check Out</a>
             </div>
 
         </div>

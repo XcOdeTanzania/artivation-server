@@ -77,6 +77,7 @@ Route::get('/piece/create', function () {
 
     return view('piece_create');
 })->middleware(['auth', 'role:Artist'])->name('piece.create');
+
 Route::get('/piece/edit/{piece_id}', function ($piece_id) {
 
     $piece = \App\Piece::find($piece_id);
@@ -127,3 +128,9 @@ Route::get('downloads', function (){
     return view('mobile_apps');
 })->name('downloads');
 Route::post('coupon/acquire',['uses'=>'CouponController@acquireCoupon'])->name('coupon.acquire');
+
+Route::get('/blog',function (){
+    return redirect()->away('https://blog.artivation.co.tz');
+})->name('blog');
+
+Route::get('/payment/status',['uses'=>'PesapalController@callbackHandlerWeb'])->name('payment.status');

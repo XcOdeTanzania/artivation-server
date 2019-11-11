@@ -19,10 +19,16 @@ class Transaction extends Model
         'reference_no',
         'payment_method',
         'currency',
+        'tax',
+        'shipping_cost',
+        'discount',
+        'coupon_id',
         'items_purchased'
     ];
-    protected $hidden = ['items_purchased','tracking_id'];
-    public function transactions(){
+    protected $hidden = ['items_purchased', 'tracking_id'];
+
+    public function transactions()
+    {
         return $this->hasMany(User::class);
     }
 }
